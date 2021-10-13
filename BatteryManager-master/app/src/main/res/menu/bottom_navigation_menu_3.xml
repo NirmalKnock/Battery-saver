@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_battery"
+        android:icon="@drawable/battery"
+        android:title="@string/battery" />
+
+    <item
+        android:id="@+id/menu_controller"
+        android:icon="@drawable/ic_apps_black_24dp"
+        android:title="@string/controller" />
+
+    <item
+        android:id="@+id/menu_geofencing"
+        android:icon="@drawable/location_black"
+        android:title="@string/geofencing" />
+
+</menu>

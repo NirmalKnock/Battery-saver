@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.battery.saver.G">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+
+
+    <application
+        android:name=".JnaBatteryManagerApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launchers"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launchers"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA2XKrTTMbyD6E9uLjJw4Dohigao3I_Ybc" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <receiver android:name="com.battery.saver.G.BatteryLevelReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_LOW" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.battery.saver.G.Receiver">
+            <intent-filter>
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.net.wifi.p2p.CONNECTION_STATE_CHANGE" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.battery.saver.G.UnlockReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.battery.saver.G.ScreenChangeReceiver" />
+
+        <receiver android:name="com.battery.saver.G.StartReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data
+                    android:path="com.example.jeremy.controller"
+                    android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+
+        <service
+            android:name="com.battery.saver.G.ControllerService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.location.PROVIDERS_CHANGED" />
+                <action android:name="android.net.wifi.WIFI_AP_STATE_CHANGED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.battery.saver.G.BatteryService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity android:name="com.battery.saver.G.HomeActivity">
+            <!-- android:theme="@style/MyTheme.TranslucentNavigation"> -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.battery.saver.G.view.GeofencesActivity"
+            android:label="Geofences" />
+
+        <activity
+            android:name="com.battery.saver.G.Preferences"
+            android:label="WiFi Toggle Automation" />
+
+        <provider
+            android:name="com.battery.saver.G.persistent.GeofenceProvider"
+            android:authorities="com.battery.saver.G"
+            android:exported="false" />
+
+        <activity
+            android:name="com.battery.saver.G.view.AddEditGeofenceActivity"
+            android:label="Add/Edit Geofence" />
+
+        <activity
+            android:name="com.battery.saver.G.view.SettingsActivity"
+            android:label="Geofencing Settings">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="controller" />
+            </intent-filter>
+        </activity>
+
+        <service android:name="com.battery.saver.G.service.LocativeService" />
+        <service android:name="com.battery.saver.G.service.TransitionService" />
+        <service android:name="com.battery.saver.G.service.ReceiveTransitionsIntentService" />
+
+        <receiver android:name="com.battery.saver.G.geo.StartupBroadCastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
